@@ -1,161 +1,72 @@
 <div class="container mt-4">
   <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card">
+    <div class="col-md-10">  <div class="card">
         <div class="card-header">
           Onboard Certificate
         </div>
         <div class="card-body">
           <form>
-            <div class="mb-3">
-              <label for="csi" class="form-label">CSI</label>
-              <input type="text" class="form-control" id="csi" value="169073">
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label">Environment</label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="environment" id="dev" value="dev" checked>
-                <label class="form-check-label" for="dev">DEV</label>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                  <mat-label for="csi">CSI</mat-label>
+                  <input matInput type="text" id="csi" value="169073">
+                </mat-form-field>
               </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="environment" id="uat" value="uat">
-                <label class="form-check-label" for="uat">UAT</label>
+              <div class="col-md-4">
+                <label class="form-label">Environment</label>
+                <mat-radio-group aria-label="Select an option">
+                  <mat-radio-button value="dev" checked>DEV</mat-radio-button>
+                  <mat-radio-button value="uat">UAT</mat-radio-button>
+                  <mat-radio-button value="prod">PROD</mat-radio-button>
+                </mat-radio-group>
               </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="environment" id="prod" value="prod">
-                <label class="form-check-label" for="prod">PROD</label>
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label for="index" class="form-label">Index (Optional not recommended)</label>
-              <input type="text" class="form-control" id="index" placeholder="example: swdmsdev1">
-            </div>
-
-            <div class="mb-3">
-              <label for="secretName" class="form-label">Secret Name</label>
-              <input type="text" class="form-control" id="secretName" value="testcertv1">
-            </div>
-
-            <div class="mb-3">
-              <label for="applicationNames" class="form-label">Application Names</label>
-              <input type="text" class="form-control" id="applicationNames" value="app1, app2, app3">
-            </div>
-
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" value="****">
-            </div>
-
-            <div class="mb-3">
-              <label for="certificate" class="form-label">Certificate</label>
-              <input type="file" class="form-control" id="certificate">
-            </div>
-
-            <div class="mb-3">
-              <label for="privateKey" class="form-label">Private Key</label>
-              <input type="file" class="form-control" id="privateKey">
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label">Select CA Certificate(s)</label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="caCertificate" id="caDev" value="dev" checked>
-                <label class="form-check-label" for="caDev">DEV</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="caCertificate" id="caUat" value="uat">
-                <label class="form-check-label" for="caUat">UAT</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="caCertificate" id="caProd" value="prod">
-                <label class="form-check-label" for="caProd">PROD</label>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                  <mat-label for="index">Index (Optional not recommended)</mat-label>
+                  <input matInput type="text" id="index" placeholder="example: swdmsdev1">
+                </mat-form-field>
               </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-===========================
-
-<div class="container mt-4">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">
-          Onboard Certificate
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="mb-3">
-              <mat-form-field appearance="outline">
-                <mat-label for="csi">CSI</mat-label>
-                <input matInput type="text" id="csi" value="169073">
-              </mat-form-field>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                  <mat-label for="secretName">Secret Name</mat-label>
+                  <input matInput type="text" id="secretName" value="testcertv1">
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                  <mat-label for="applicationNames">Application Names</mat-label>
+                  <input matInput type="text" id="applicationNames" value="app1, app2, app3">
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                  <mat-label for="password">Password</mat-label>
+                  <input matInput type="password" id="password" value="****">
+                </mat-form-field>
+              </div>
             </div>
 
-            <div class="mb-3">
-              <label class="form-label">Environment</label>
-              <mat-radio-group aria-label="Select an option">
-                <mat-radio-button value="dev" checked>DEV</mat-radio-button>
-                <mat-radio-button value="uat">UAT</mat-radio-button>
-                <mat-radio-button value="prod">PROD</mat-radio-button>
-              </mat-radio-group>
-            </div>
-
-            <div class="mb-3">
-              <mat-form-field appearance="outline">
-                <mat-label for="index">Index (Optional not recommended)</mat-label>
-                <input matInput type="text" id="index" placeholder="example: swdmsdev1">
-              </mat-form-field>
-            </div>
-
-            <div class="mb-3">
-              <mat-form-field appearance="outline">
-                <mat-label for="secretName">Secret Name</mat-label>
-                <input matInput type="text" id="secretName" value="testcertv1">
-              </mat-form-field>
-            </div>
-
-            <div class="mb-3">
-              <mat-form-field appearance="outline">
-                <mat-label for="applicationNames">Application Names</mat-label>
-                <input matInput type="text" id="applicationNames" value="app1, app2, app3">
-              </mat-form-field>
-            </div>
-
-            <div class="mb-3">
-              <mat-form-field appearance="outline">
-                <mat-label for="password">Password</mat-label>
-                <input matInput type="password" id="password" value="****">
-              </mat-form-field>
-            </div>
-
-            <div class="mb-3">
-              <label for="certificate" class="form-label">Certificate</label>
-              <input type="file" class="form-control" id="certificate">
-            </div>
-
-            <div class="mb-3">
-              <label for="privateKey" class="form-label">Private Key</label>
-              <input type="file" class="form-control" id="privateKey">
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label">Select CA Certificate(s)</label>
-              <mat-radio-group aria-label="Select an option">
-                <mat-radio-button value="dev" checked>DEV</mat-radio-button>
-                <mat-radio-button value="uat">UAT</mat-radio-button>
-                <mat-radio-button value="prod">PROD</mat-radio-button>
-              </mat-radio-group>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label for="certificate" class="form-label">Certificate</label>
+                <input type="file" class="form-control" id="certificate">
+              </div>
+              <div class="col-md-4">
+                <label for="privateKey" class="form-label">Private Key</label>
+                <input type="file" class="form-control" id="privateKey">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Select CA Certificate(s)</label>
+                <mat-radio-group aria-label="Select an option">
+                  <mat-radio-button value="dev" checked>DEV</mat-radio-button>
+                  <mat-radio-button value="uat">UAT</mat-radio-button>
+                  <mat-radio-button value="prod">PROD</mat-radio-button>
+                </mat-radio-group>
+              </div>
             </div>
 
             <button mat-raised-button color="primary" type="submit">Submit</button>
@@ -165,4 +76,3 @@
     </div>
   </div>
 </div>
-
