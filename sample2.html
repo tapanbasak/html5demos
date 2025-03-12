@@ -1,0 +1,145 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          Certificates
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                  <mat-label>Search Certificates</mat-label>
+                  <input matInput type="text" [(ngModel)]="searchQuery">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 d-flex align-items-center">
+                <button mat-raised-button color="primary" (click)="search()">Search</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Serial</th>
+                  <th>CSI</th>
+                  <th>Expiry</th>
+                  <th>Common Name</th>
+                  <th>KV2-Paths</th>
+                  <th>Onboarded Application</th>
+                  <th>Customer Application</th>
+                  <th>Last Updated</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let certificate of certificates">
+                  <td>{{ certificate.serial }}</td>
+                  <td>{{ certificate.csi }}</td>
+                  <td>{{ certificate.expiry }}</td>
+                  <td>{{ certificate.commonName }}</td>
+                  <td>{{ certificate.kv2Paths }}</td>
+                  <td>{{ certificate.onboardedApplication }}</td>
+                  <td>{{ certificate.customerApplication }}</td>
+                  <td>{{ certificate.lastUpdated }}</td>
+                  <td>
+                    <button mat-icon-button color="warn" (click)="deleteCertificate(certificate.serial)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+=========================
+import { Component, OnInit } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+interface Certificate {
+  serial: string;
+  csi: string;
+  expiry: string;
+  commonName: string;
+  kv2Paths: string;
+  onboardedApplication: string;
+  customerApplication: string;
+  lastUpdated: string;
+}
+
+@Component({
+  selector: 'app-certificates',
+  standalone: true,
+  imports: [MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, FormsModule, CommonModule],
+  templateUrl: './certificates.component.html',
+  styleUrl: './certificates.component.css'
+})
+export class CertificatesComponent implements OnInit {
+  certificates: Certificate[] = [];
+  searchQuery: string = '';
+
+  ngOnInit(): void {
+    this.certificates = this.getSampleCertificates();
+  }
+
+  search(): void {
+    // Implement search logic here
+    console.log('Searching for:', this.searchQuery);
+  }
+
+  deleteCertificate(serial: string): void {
+    // Implement delete logic here
+    console.log('Deleting certificate:', serial);
+    this.certificates = this.certificates.filter(cert => cert.serial !== serial);
+  }
+
+  getSampleCertificates(): Certificate[] {
+    return [
+      {
+        serial: '0967475rfbur560dsfmmb98',
+        csi: '169073',
+        expiry: '26-06-11',
+        commonName: 'cyberark-pcf.nam...',
+        kv2Paths: '169073/app/dev/test...more',
+        onboardedApplication: 'app2. app1',
+        customerApplication: 'app2_deployment_dev1',
+        lastUpdated: '24-07-31'
+      },
+      {
+        serial: '0967475rfbur560dsfmmb98',
+        csi: '169073',
+        expiry: '26-02-06',
+        commonName: 'cyberark-pcf.nam...',
+        kv2Paths: '169073/app/dev/test...more',
+        onboardedApplication: 'app2. app1',
+        customerApplication: 'app2_deployment_dev1',
+        lastUpdated: '24-07-31'
+      },
+      // ... add more sample certificates
+      {
+        serial: '0967475rfbur560dsfmmb98',
+        csi: '169073',
+        expiry: '26-06-15',
+        commonName: 'cyberark-pcf.nam...',
+        kv2Paths: '169073/app/dev/test...more',
+        onboardedApplication: 'app2. app1',
+        customerApplication: 'app2_deployment_dev1',
+        lastUpdated: '24-07-31'
+      }
+    ];
+  }
+}
