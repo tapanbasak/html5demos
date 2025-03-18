@@ -1,0 +1,185 @@
+<div class="modal-backdrop show"></div> 
+
+<div class="modal fade show" tabindex="-1" role="dialog" style="display: block;">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Review your Inputs</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+            <strong>CSI:</strong>
+            <p>169072</p>
+          </div>
+          <div class="col-md-4">
+            <strong>Environment:</strong>
+            <p>Dev</p>
+          </div>
+          <div class="col-md-4">
+            <strong>Index:</strong>
+            <p>169072</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <strong>Secret Name:</strong>
+            <p>testcertv1</p>
+          </div>
+          <div class="col-md-4">
+            <strong>Application Names:</strong>
+            <p>app1, aap2, app3</p>
+          </div>
+          <div class="col-md-4">
+            <strong>Secret Value:</strong>
+            <p>{"key":"value1"}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+==================
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  background-color: #000;
+}
+
+.modal-backdrop.show {
+  opacity: 0.5;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  overflow: hidden;
+  outline: 0;
+}
+
+.modal.fade .modal-dialog {
+  transition: -webkit-transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
+  -webkit-transform: translate(0, -50px);
+  transform: translate(0, -50px);
+}
+
+.modal.show .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 0.5rem;
+  pointer-events: none;
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal-dialog-centered {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  min-height: calc(100% - (0.5rem * 2));
+}
+
+.modal-dialog-centered::before {
+  display: block;
+  height: calc(100vh - (0.5rem * 2));
+  content: "";
+}
+
+.modal-content {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+  outline: 0;
+}
+
+.modal-header {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 1rem 1rem;
+  border-bottom: 1px solid #dee2e6;
+  border-top-left-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;
+}
+
+.modal-title {
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+.modal-body {
+  position: relative;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1rem;
+}
+
+.modal-footer {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  padding: 1rem;
+  border-top: 1px solid #dee2e6;
+  border-bottom-right-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
+}
+
+.modal-footer > :not(:first-child) {
+  margin-left: .25rem;
+}
+
+.close {
+  float: right;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+}
+
+.close:hover {
+  color: #000;
+  text-decoration: none;
+  opacity: .75;
+}
