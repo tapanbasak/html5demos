@@ -1,0 +1,136 @@
+import { Component } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { CertificatesListComponent } from '../certificates-list/certificates-list.component'; // Assuming this is the list component
+import { SecretsListComponent } from '../secrets-list/secrets-list.component'; // Assuming this is the list component
+
+@Component({
+  selector: 'app-secret-management-portal',
+  standalone: true,
+  imports: [
+    RouterModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    FormsModule,
+    CertificatesListComponent,
+    SecretsListComponent,
+  ],
+  templateUrl: './secret-management-portal.component.html',
+  styleUrl: './secret-management-portal.component.css',
+})
+export class SecretManagementPortalComponent {
+  selectedEnvironment: string = '';
+  searchQuery: string = '';
+  showCertificates: boolean = true; // Default to show certificates
+
+  constructor(private router: Router) {}
+
+  onEnvironmentChange(): void {
+    console.log('Selected Environment:', this.selectedEnvironment);
+    // You can implement logic here to filter data based on the environment
+  }
+
+  search(): void {
+    console.log('Searching for:', this.searchQuery);
+    // Implement search logic here
+  }
+
+  navigateToOnboardCertificate(): void {
+    this.router.navigate(['/onboard-certificate']);
+  }
+
+  navigateToOnboardSecret(): void {
+    this.router.navigate(['/onboard-secret']);
+  }
+
+  toggleTabs(showCert: boolean): void {
+    this.showCertificates = showCert;
+  }
+}
+
+
+
+==========================================================================
+
+<div class="container-fluid p-4">
+  <div class="row mb-3 align-items-center">
+    <div class="col-md-3">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Select Environment</mat-label>
+        <mat-select [(ngModel)]="selectedEnvironment" (selectionChange)="onEnvironmentChange()">
+          <mat-option value="all">All Environments</mat-option>
+          <mat-option value="production">Production</mat-option>
+          <mat-option value="staging">Staging</mat-option>
+          <mat-option value="development">Development</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Search certificates & secrets ...</mat-label>
+        <input matInput type="text" [(ngModel)]="searchQuery">
+        <button mat-icon-button matSuffix aria-label="Search" (click)="search()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="col-md-3 d-flex justify-content-end">
+      <button mat-raised-button color="primary" class="me-2" (click)="navigateToOnboardCertificate()">
+        <mat-icon>add</mat-icon> Onboard Certificate
+      </button>
+      <button mat-raised-button color="primary" (click)="navigateToOnboardSecret()">
+        <mat-icon>add</mat-icon> Onboard Secret
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <mat-button-toggle-group name="listType" aria-label="Certificates or Secrets" (valueChange)="toggleTabs($event.value === 'certificates')">
+        <mat-button-toggle value="certificates">Certificates</mat-button-toggle>
+        <mat-button-toggle value="secrets">Secrets</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <ng-container *ngIf="showCertificates">
+        <app-certificates-list></app-certificates-list>
+      </ng-container>
+      <ng-container *ngIf="!showCertificates">
+        <app-secrets-list></app-secrets-list>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+
+============================================
+
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { SecretManagementPortalComponent } from './secret-management-portal/secret-management-portal.component';
+import { OnboardCertificateComponent } from './onboard-certificate/onboard-certificate.component';
+import { OnboardSecretComponent } from './onboard-secret/onboard-secret.component';
+
+const routes: Routes = [
+  { path: '', component: SecretManagementPortalComponent },
+  { path: 'onboard-certificate', component: OnboardCertificateComponent },
+  { path: 'onboard-secret', component: OnboardSecretComponent },
+  // Add other routes as needed
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
