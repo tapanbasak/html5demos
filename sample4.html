@@ -1,0 +1,350 @@
+Landing page comp 
+import { Component } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-landing-page',
+  standalone: true,
+  imports: [RouterModule, MatRadioModule, MatButtonModule, FormsModule, CommonModule],
+  templateUrl: './landing-page.component.html',
+  styleUrl: './landing-page.component.css',
+})
+export class LandingPageComponent {
+  selectedEnvironment: string = '';
+
+  constructor(private router: Router) {}
+
+  onSubmit(): void {
+    if (this.selectedEnvironment) {
+      // Navigate to the next page, passing the selected environment if needed
+      this.router.navigate(['/certificates']); // Assuming '/certificates' is the path to the next page
+      console.log('Selected Environment:', this.selectedEnvironment);
+      // You can also pass the environment as a query parameter or state if required:
+      // this.router.navigate(['/certificates'], { queryParams: { env: this.selectedEnvironment } });
+      // this.router.navigate(['/certificates'], { state: { environment: this.selectedEnvironment } });
+    } else {
+      // Optionally, show an error message if no environment is selected
+      console.log('Please select an environment.');
+    }
+  }
+}
+
+
+===================================================
+
+Landing page html 
+<div class="container-fluid p-5 bg-primary text-white text-center">
+  <h1>Welcome to</h1>
+  <h2>SECRET MANAGEMENT PORTAL</h2>
+</div>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card p-4">
+        <div class="text-center mb-4">
+          <p>Please select your Environment to proceed</p>
+        </div>
+
+        <div class="mb-3 d-flex justify-content-center">
+          <mat-radio-group aria-label="Select an environment" [(ngModel)]="selectedEnvironment">
+            <mat-radio-button value="dev" class="me-3">DEV</mat-radio-button>
+            <mat-radio-button value="uat" class="me-3">UAT</mat-radio-button>
+            <mat-radio-button value="prod">PROD</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+===================================
+Cert and secret component 
+
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+interface Item {
+  serial: string;
+  csi: string;
+  expiry: string;
+  commonName: string;
+  kv2Paths: string;
+  onboardedApplication: string;
+  customerApplication: string;
+  lastUpdated: string;
+}
+
+@Component({
+  selector: 'app-certificates-and-secrets',
+  standalone: true,
+  imports: [
+    RouterModule, // Import RouterModule for routerLink
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    FormsModule,
+    CommonModule,
+  ],
+  templateUrl: './certificates-and-secrets.component.html',
+  styleUrl: './certificates-and-secrets.component.css',
+})
+export class CertificatesAndSecretsComponent implements OnInit {
+  selectedEnvironment: string = '';
+  searchQuery: string = '';
+  showCertificates: boolean = true; // Default to show certificates
+  certificates: Item[] = [];
+  secrets: Item[] = []; // You'll need to define the structure for secrets
+
+  constructor(private route: ActivatedRoute, private router: Router) {} // Inject Router
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.selectedEnvironment = params['env'] || '';
+      console.log('Selected Environment:', this.selectedEnvironment);
+      this.loadData();
+    });
+  }
+
+  loadData(): void {
+    this.certificates = this.getSampleCertificates();
+    this.secrets = this.getSampleSecrets();
+  }
+
+  search(): void {
+    console.log('Searching for:', this.searchQuery);
+    // Implement search logic to filter the displayed lists
+  }
+
+  toggleTabs(showCert: boolean): void {
+    this.showCertificates = showCert;
+  }
+
+  renewItem(serial: string): void {
+    console.log('Renewing item with serial:', serial);
+    // Implement renew logic
+  }
+
+  deleteItem(serial: string): void {
+    console.log('Deleting item with serial:', serial);
+    // Implement delete logic
+    if (this.showCertificates) {
+      this.certificates = this.certificates.filter(item => item.serial !== serial);
+    } else {
+      this.secrets = this.secrets.filter(item => item.serial !== serial);
+    }
+  }
+
+  navigateToOnboardCertificate(): void {
+    this.router.navigate(['/onboard-certificate']);
+  }
+
+  navigateToOnboardSecret(): void {
+    this.router.navigate(['/onboard-secret']);
+  }
+
+  getSampleCertificates(): Item[] {
+    return [
+      {
+        serial: '0967475rfbur560dsfmmb98',
+        csi: '169073',
+        expiry: '26-06-11',
+        commonName: 'cyberark-pcf.nam ...',
+        kv2Paths: '169073 / app / dev / testcertv1',
+        onboardedApplication: 'app1 , app2',
+        customerApplication: 'app2 deployment_dev1',
+        lastUpdated: '24-07-31',
+      },
+      {
+        serial: '0967475rfbur560dsfmmb98',
+        csi: '169073',
+        expiry: '26-02-06',
+        commonName: 'cyberark-pcf.nam ...',
+        kv2Paths: '169073 / app2 / dev / testcertv1',
+        onboardedApplication: 'app1 , app2',
+        customerApplication: 'app2_deployment_dev1',
+        lastUpdated: '24-07-31',
+      },
+      // ... more sample data
+    ];
+  }
+
+  getSampleSecrets(): Item[] {
+    return [
+      {
+        serial: 'secret123',
+        csi: 'N/A',
+        expiry: 'N/A',
+        commonName: 'api-token',
+        kv2Paths: 'secrets/staging/api',
+        onboardedApplication: 'app-gateway',
+        customerApplication: 'internal-services',
+        lastUpdated: '24-08-01',
+      },
+      // ... more sample secret data
+    ];
+  }
+}
+
+
+================================================
+
+Html 
+<div class="container-fluid p-4">
+  <div class="row mb-3 align-items-center">
+    <div class="col-md-3">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Select Environment</mat-label>
+        <mat-select [(ngModel)]="selectedEnvironment" disabled>
+          <mat-option [value]="selectedEnvironment">{{ selectedEnvironment || 'All Environments' }}</mat-option>
+        </mat-select>
+        <mat-hint>Environment selected on previous page</mat-hint>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Search Certificates and Secrets</mat-label>
+        <input matInput type="text" [(ngModel)]="searchQuery">
+        <button mat-icon-button matSuffix aria-label="Search" (click)="search()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="col-md-3 d-flex justify-content-end">
+      <button mat-raised-button color="primary" class="me-2" (click)="navigateToOnboardCertificate()">
+        <mat-icon>add</mat-icon> Onboard Certificate
+      </button>
+      <button mat-raised-button color="primary" (click)="navigateToOnboardSecret()">
+        <mat-icon>add</mat-icon> Onboard Secret
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <mat-button-toggle-group name="listType" aria-label="Certificates or Secrets" (valueChange)="toggleTabs($event.value === 'certificates')">
+        <mat-button-toggle value="certificates" checked>Certificates</mat-button-toggle>
+        <mat-button-toggle value="secrets">Secrets</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-striped" *ngIf="showCertificates">
+          <thead>
+            <tr>
+              <th>Serial</th>
+              <th>CSI</th>
+              <th>Expiry</th>
+              <th>Common Name</th>
+              <th>KV2-Paths</th>
+              <th>Onboarded Application</th>
+              <th>Customer Application</th>
+              <th>Last Updated</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of certificates">
+              <td>{{ item.serial }}</td>
+              <td>{{ item.csi }}</td>
+              <td>{{ item.expiry }}</td>
+              <td>{{ item.commonName }}</td>
+              <td>{{ item.kv2Paths }}</td>
+              <td>{{ item.onboardedApplication }}</td>
+              <td>{{ item.customerApplication }}</td>
+              <td>{{ item.lastUpdated }}</td>
+              <td>
+                <button mat-icon-button color="primary" (click)="renewItem(item.serial)">
+                  <mat-icon>refresh</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteItem(item.serial)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="table table-striped" *ngIf="!showCertificates">
+          <thead>
+            <tr>
+              <th>Serial</th>
+              <th>Common Name</th>
+              <th>KV2-Paths</th>
+              <th>Onboarded Application</th>
+              <th>Customer Application</th>
+              <th>Last Updated</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of secrets">
+              <td>{{ item.serial }}</td>
+              <td>{{ item.commonName }}</td>
+              <td>{{ item.kv2Paths }}</td>
+              <td>{{ item.onboardedApplication }}</td>
+              <td>{{ item.customerApplication }}</td>
+              <td>{{ item.lastUpdated }}</td>
+              <td>
+                <button mat-icon-button color="primary" (click)="renewItem(item.serial)">
+                  <mat-icon>refresh</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteItem(item.serial)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+=================================================
+App routing 
+
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { CertificatesAndSecretsComponent } from './certificates-and-secrets/certificates-and-secrets.component';
+import { OnboardCertificateComponent } from './onboard-certificate/onboard-certificate.component';
+import { OnboardSecretComponent } from './onboard-secret/onboard-secret.component';
+
+const routes: Routes = [
+  { path: 'certificates', component: CertificatesAndSecretsComponent }, // Assuming this is the path for the list page
+  { path: 'onboard-certificate', component: OnboardCertificateComponent },
+  { path: 'onboard-secret', component: OnboardSecretComponent },
+  // ... other routes
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+
