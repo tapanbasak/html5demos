@@ -66,3 +66,87 @@
 .col-md-8 {
   max-width: 600px; /* Limit card width */
 }
+
+
+
+====================================================
+
+/* landing-page.component.css */
+
+.container-fluid.bg-primary {
+  background-color: #0056b3 !important; /* Adjust the primary color to match */
+  padding: 40px; /* Adjust vertical padding */
+  display: flex; /* Enable flexbox for side-by-side layout */
+  align-items: center; /* Vertically align items in the center */
+  justify-content: space-between; /* Space out the welcome message and the selection area */
+}
+
+.welcome-section {
+  color: white;
+  text-align: left; /* Align welcome text to the left */
+  flex-grow: 1; /* Allow it to take more space */
+  padding-right: 20px; /* Add some spacing between sections */
+}
+
+.welcome-section h1 {
+  font-size: 2rem; /* Adjust heading size */
+  margin-bottom: 0.5rem;
+}
+
+.welcome-section h2 {
+  font-size: 2.5rem; /* Adjust subheading size */
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.selection-card-container {
+  background-color: white; /* Background for the selection card */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  text-align: center; /* Center the content inside the selection card */
+  min-width: 300px; /* Minimum width for the selection card */
+}
+
+.selection-card-container p {
+  font-size: 1rem; /* Adjust instruction text size */
+  color: #555; /* Adjust text color */
+  margin-bottom: 1.5rem;
+}
+
+.mat-radio-group {
+  display: flex;
+  gap: 1.5rem; /* Adjust spacing between radio buttons */
+  justify-content: center; /* Center radio buttons horizontally */
+  margin-bottom: 1.5rem;
+}
+
+.mat-radio-button .mat-radio-label {
+  font-size: 0.9rem; /* Adjust radio button label size */
+}
+
+.mat-raised-button.mat-primary {
+  background-color: #0056b3; /* Ensure primary button color */
+  color: white;
+  padding: 10px 25px; /* Adjust button padding */
+  font-size: 1rem; /* Adjust button text size */
+  border-radius: 6px; /* Add button rounded corners */
+}
+
+.mat-raised-button.mat-primary:hover {
+  background-color: #004494; /* Darken on hover */
+}
+
+/* Adjust overall container */
+.container {
+  padding-top: 20px; /* Add some top padding below the banner */
+}
+
+.row.justify-content-center {
+  margin-top: 0; /* Remove the previous top margin */
+}
+
+.col-md-8 {
+  max-width: none; /* Allow the column to take full width within its container */
+}
+
