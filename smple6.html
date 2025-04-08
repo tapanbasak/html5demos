@@ -267,4 +267,185 @@ label.form-label {
   margin-bottom: 4px;
 }
 
+==============================================
+
+<div class="container-fluid mt-3 px-4">
+  <div class="form-section d-flex justify-content-between mb-3">
+    <div class="form-group w-25">
+      <label for="environmentSelect">Select Environment</label>
+      <select class="form-control" id="environmentSelect" [(ngModel)]="selectedEnv">
+        <option *ngFor="let env of environments" [value]="env">{{ env }}</option>
+      </select>
+    </div>
+
+    <div class="form-group w-50">
+      <label for="searchInput">Search Certificates and Secrets</label>
+      <input type="text" class="form-control" id="searchInput" placeholder="Input text" [(ngModel)]="searchText">
+    </div>
+
+    <div class="button-group align-self-end">
+      <button class="btn btn-primary mr-2" (click)="onSearch()">Search</button>
+      <button class="btn btn-primary mr-2" (click)="goToCert()">Onboard Certificate</button>
+      <button class="btn btn-danger" (click)="goToSecret()">Onboard Secret</button>
+    </div>
+  </div>
+
+  <div class="tab-section">
+    <span class="tab" [class.active]="activeTab === 'cert'" (click)="switchTab('cert')">Certificates</span>
+    <span class="tab" [class.active]="activeTab === 'secret'" (click)="switchTab('secret')">Secrets</span>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered mt-2">
+      <thead class="thead-light">
+        <tr>
+          <th>Serial</th>
+          <th>CSI</th>
+          <th>Expiry</th>
+          <th>Common Name</th>
+          <th>KV2-Paths</th>
+          <th>Onboarded Application</th>
+          <th>Customer Application</th>
+          <th>Last Updated</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of displayedData">
+          <td>{{ item.serial }}</td>
+          <td>{{ item.csi }}</td>
+          <td>{{ item.expiry }}</td>
+          <td>{{ item.commonName }}</td>
+          <td>{{ item.kv2Path }}</td>
+          <td>{{ item.onboardedApp }}</td>
+          <td>{{ item.customerApp }}</td>
+          <td>{{ item.lastUpdated }}</td>
+          <td>
+            <span class="action-link renew">Renew</span>
+            <span class="action-link delete">Delete</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+=============================
+
+.container-fluid {
+  font-family: Arial, sans-serif;
+}
+
+.form-section label {
+  font-weight: 600;
+}
+
+.button-group .btn {
+  min-width: 160px;
+  font-weight: 500;
+}
+
+.tab-section {
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.tab {
+  display: inline-block;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  color: gray;
+  border-bottom: 3px solid transparent;
+  margin-right: 10px;
+}
+
+.tab.active {
+  color: #4a90e2;
+  border-color: #4a90e2;
+}
+
+.action-link {
+  margin-right: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.action-link.renew {
+  color: #e91e63;
+}
+
+.action-link.delete {
+  color: red;
+}
+
+
+
+===========================================
+
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-managecertsecret',
+  templateUrl: './managecertsecret.component.html',
+  styleUrls: ['./managecertsecret.component.css']
+})
+export class ManageCertSecretComponent {
+  selectedEnv = 'DEV';
+  environments = ['DEV', 'UAT', 'PROD'];
+  searchText = '';
+
+  activeTab: 'cert' | 'secret' = 'cert';
+
+  certificateData = [
+    {
+      serial: '0967475fbur560dsfrnmb98',
+      csi: '169073',
+      expiry: '26-06-22',
+      commonName: 'cyberark-pcf.name',
+      kv2Path: '169073/app/dev/testcertv1',
+      onboardedApp: 'app1, app2',
+      customerApp: 'app2_deployment_dev1',
+      lastUpdated: '24-07-31'
+    }
+  ];
+
+  secretData = [
+    {
+      serial: '0967475fbur560dsfrnmb88',
+      csi: '169073',
+      expiry: '26-06-22',
+      commonName: 'cyberark-pcf.name',
+      kv2Path: '169073/app2/dev/testcertv1',
+      onboardedApp: 'app1, app2',
+      customerApp: 'app2_deployment_dev1',
+      lastUpdated: '24-07-31'
+    }
+  ];
+
+  get displayedData() {
+    return this.activeTab === 'cert' ? this.certificateData : this.secretData;
+  }
+
+  constructor(private router: Router) {}
+
+  switchTab(tab: 'cert' | 'secret') {
+    this.activeTab = tab;
+  }
+
+  goToCert() {
+    this.router.navigate(['/onboard-cert']);
+  }
+
+  goToSecret() {
+    this.router.navigate(['/onboard-secret']);
+  }
+
+  onSearch() {
+    // implement search logic later
+    console.log('Searching for:', this.searchText);
+  }
+}
 
