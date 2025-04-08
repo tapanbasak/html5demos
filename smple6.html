@@ -161,3 +161,110 @@ mat-form-field {
 button {
   min-width: 100px;
 }
+
+
+==========================================
+
+<div class="container mt-4">
+  <p class="fw-semibold mb-3">Please select your Environment to proceed</p>
+
+  <div class="row align-items-center mb-3">
+    <div class="col-md-3">
+      <label class="form-label small mb-1">Select Environment</label>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-select [(ngModel)]="selectedEnv">
+          <mat-option *ngFor="let env of environments" [value]="env">{{ env }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label small mb-1">Search Certificates and Secrets</label>
+      <mat-form-field appearance="outline" class="w-100">
+        <input matInput [(ngModel)]="searchTerm" />
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-5 text-end d-flex justify-content-end align-items-end mt-4">
+      <button mat-raised-button color="primary" class="me-2" (click)="search()">Search</button>
+      <button mat-raised-button color="primary" class="me-2" (click)="navigateTo('/onboard-cert')">
+        Onboard Certificate
+      </button>
+      <button mat-raised-button color="warn" (click)="navigateTo('/onboard-secret')">
+        Onboard Secret
+      </button>
+    </div>
+  </div>
+
+  <mat-tab-group [(selectedIndex)]="activeTabIndex" (selectedIndexChange)="tabChanged($event)">
+    <mat-tab label="Certificates">
+      <div class="table-responsive mt-3">
+        <table class="table table-bordered table-sm align-middle">
+          <thead class="table-light small">
+            <tr>
+              <th>Serial</th>
+              <th>CSI</th>
+              <th>Expiry</th>
+              <th>Common Name</th>
+              <th>KV2-Paths</th>
+              <th>Onboarded Application</th>
+              <th>Customer Application</th>
+              <th>Last Updated</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody class="small">
+            <tr *ngFor="let cert of filteredCertificates">
+              <td>{{ cert.serial }}</td>
+              <td>{{ cert.csi }}</td>
+              <td>{{ cert.expiry }}</td>
+              <td>{{ cert.commonName }}</td>
+              <td>{{ cert.kv2Path }}</td>
+              <td>{{ cert.onboardedApp }}</td>
+              <td>{{ cert.customerApp }}</td>
+              <td>{{ cert.lastUpdated }}</td>
+              <td>
+                <span class="text-danger me-2" style="cursor: pointer;">Renew</span>
+                <span class="text-danger" style="cursor: pointer;">Delete</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Secrets">
+      <div class="mt-3">
+        <p class="small">Dummy secret data will be displayed here.</p>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+
+========================================
+
+.table-sm td,
+.table-sm th {
+  padding: 0.4rem 0.5rem;
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+mat-form-field {
+  font-size: 13px;
+  margin-bottom: 0;
+}
+
+button {
+  min-width: 130px;
+  font-size: 13px;
+  padding: 5px 12px;
+}
+
+label.form-label {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+
